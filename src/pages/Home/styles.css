@@ -10,16 +10,19 @@
     padding: 0 30px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 }
   
 #page-home .content header {
     margin: 48px 0 0;
 }
 
+#page-home .content header h2 {
+    text-align: center;
+}
+
 #page-home .main-home {
     margin: 80px auto;
-    padding: 64px;
+    padding: 16px;
     max-width: 730px;
     background: #FFF;
     border-radius: 8px;
@@ -28,18 +31,25 @@
 }
 
 #page-home .main-home .header-content {
+    background-color: #322153;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 64px;
+    height: 100px;
+    padding: 32px;
+    margin-bottom: 16px;
 }
 
 #page-home .main-home .header-content h2 {
     font-size: 36px;
     text-align: center;
+    color: #FFF;
 }
 
 #page-home .main-home .table-content {
+    height: 500px;
+    overflow: auto;
     color: #322153;
 }
 
@@ -48,10 +58,40 @@
     justify-content: space-between;
 }
 
-.button-whatsapp {
-    width: 50px;
-    height: 50px;
-    background-color: #FFF;
-    border-radius: 4px;
-    border: 1px solid #000 !important;
+#page-home .main-home .table-content .card-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+#page-home .main-home .table-content .loading {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;    
+}
+
+#page-home .main-home .table-content .loading .spinner-border {
+    margin-top: 8px;
+}
+
+#page-home .main-home .table-content .green {
+    background-color: #2FB86E;
+    color: #FFF;
+}
+
+#page-home .main-home .table-content .blue {
+    background-color: #0375B4;
+    color: #FFF;
+}
+
+#page-home .main-home .table-content .yellow {
+    background-color: #FDD700;
+    color: #FFF;
+}
+
+#page-home .main-home .table-content .red {
+    background-color: #CE0700;
+    color: #FFF;
 }

@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
 
 import { GiChampions } from 'react-icons/gi';
-import { GoWatch } from 'react-icons/go';
-import { Card } from 'react-bootstrap';
+import { FiSearch } from 'react-icons/fi';
+import { Card, Spinner, Accordion, InputGroup, FormControl } from 'react-bootstrap';
 
-import { WhatsappShareButton } from 'react-share';
+import loading from '../../assets/loading.gif';
+
 import api from '../../services/api';
 
 import './styles.css';
 
 const Home = () => {
-    const [players, setPlayers] = useState();
+    const [participants, setParticipants] = useState([]);
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
-        api.get('currentwar').then(res => {
-            console.log(res);
+        api.get(`wars`).then(res => {
+            const players = res.data.participants.sort((a, b) => b.total - a.total);
+
+            setParticipants(players);
         });
     }, []);
+
+    function handleChangeValue() {
+        let input = document.querySelector('#query').value;
+
+        setQuery(input);
+    }
 
     return (
         <div id="page-home">
@@ -29,30 +39,66 @@ const Home = () => {
             <main className="main-home">
                 <div className="header-content">
                     <h2>Campeonato</h2>
-                    <GiChampions color="#FFFC00" size={50} />
+                    <GiChampions color="#FFF" size={50} />
                 </div>
 
+                {participants.length !== 0 &&
+                    <div className="search-participant">
+                        <InputGroup className="mb-3">
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="basic-addon1">
+                                    <FiSearch />
+                                </InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                                name="query"
+                                id="query"
+                                onChange={handleChangeValue}
+                                placeholder="Nome"
+                                aria-label="Nome"
+                                aria-describedby="basic-addon1"
+                            />
+                        </InputGroup>
+                    </div>
+                }
+
                 <div className="table-content">
-                    <Card>
-                        <Card.Header>1º</Card.Header>
-                        <Card.Body>
-                            <Card.Text>Cartas ganhas: 1000</Card.Text>
-                            <Card.Text>Batalhas jogadas: 3</Card.Text>
-                            <Card.Text>Ganhas: 2</Card.Text>
-                        </Card.Body>
-                    </Card>
+                    {participants.length === 0 &&
+                        <div className="loading">
+                            <img src={loading} width="50" alt="loading" />
+                            <Spinner size="sm" animation="border" />
+                        </div>
+                    }
+
+                    {participants.filter(p => p.participant.name.toLowerCase().includes(query.toLowerCase())).map((player, index) => (
+                        <Accordion key={player.participant.tag} defaultActiveKey="1">
+                            <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey={index + 1 === 1 ? "1" : "0"} className={
+                                    index + 1 <= 10 ? "blue" : index + 1 > 10 && index + 1 <= 20 ? "green" : index + 1 > 20 && index + 1 <= 30 ? "yellow" : "red"
+                                }>
+                                    <span>
+                                        {index + 1} - {player.participant.name} - {player.participant.tag}
+                                    </span>
+                                    <span>{player.total}</span>
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey={index + 1 === 1 ? "1" : "0"}>
+                                    <Card.Body>
+                                        <Card.Text>Coletas: {player.collections}</Card.Text>
+                                        <Card.Text>War / Part: {player.wars_participated}</Card.Text>
+                                        <Card.Text>Guerra: {player.wars_participated}/10 - {player.matches}</Card.Text>
+                                        <Card.Text>Penalidades: {player.punishment}</Card.Text>
+                                        <Card.Text>Derrotas: {player.defeats}</Card.Text>
+                                        <Card.Text>Vitórias: {player.wins}</Card.Text>
+                                        <Card.Text>Bônus: {player.bonus}</Card.Text>
+                                        <Card.Text>Penalidades: {player.penalties}</Card.Text>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        </Accordion>
+                    ))}
                 </div>
             </main>
-            <WhatsappShareButton
-                className="button-whatsapp"
-                size={32}
-                color="blue"
-                title="Confira minha posição"
-                url="www.google.com.br"
-            >
-                <GoWatch size={24} />
-            </WhatsappShareButton>
-        </div>
+        </div >
     );
 };
 

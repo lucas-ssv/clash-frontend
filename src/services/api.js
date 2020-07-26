@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://proxy.royaleapi.dev/v1/clans/%8UVQPYCQ/'
+    baseURL: 'http://backend.clash.ssvieira.com/'
 });
 
 export default api;
