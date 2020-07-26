@@ -5,6 +5,7 @@ import { FiSearch } from 'react-icons/fi';
 import { Card, Spinner, Accordion, InputGroup, FormControl } from 'react-bootstrap';
 
 import loading from '../../assets/loading.gif';
+import logo from '../../assets/logo.png';
 
 import api from '../../services/api';
 
@@ -32,6 +33,7 @@ const Home = () => {
         <div id="page-home">
             <div className="content">
                 <header>
+                    <img src={logo} alt="logo" width="80" />
                     <h2>Kings of Clash</h2>
                 </header>
             </div>
@@ -74,7 +76,7 @@ const Home = () => {
                         <Accordion key={player.participant.tag} defaultActiveKey="1">
                             <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey={index + 1 === 1 ? "1" : "0"} className={
-                                    index + 1 <= 10 ? "blue" : index + 1 > 10 && index + 1 <= 20 ? "green" : index + 1 > 20 && index + 1 <= 30 ? "yellow" : "red"
+                                    index + 1 <= 10 ? "green" : index + 1 > 10 && index + 1 <= 20 ? "blue" : index + 1 > 20 && index + 1 <= 30 ? "yellow" : "red"
                                 }>
                                     <span>
                                         {index + 1} - {player.participant.name} - {player.participant.tag}
@@ -83,14 +85,14 @@ const Home = () => {
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey={index + 1 === 1 ? "1" : "0"}>
                                     <Card.Body>
-                                        <Card.Text>Coletas: {player.collections}</Card.Text>
-                                        <Card.Text>War / Part: {player.wars_participated}</Card.Text>
-                                        <Card.Text>Guerra: {player.wars_participated}/10 - {player.matches}</Card.Text>
-                                        <Card.Text>Penalidades: {player.punishment}</Card.Text>
-                                        <Card.Text>Derrotas: {player.defeats}</Card.Text>
-                                        <Card.Text>Vitórias: {player.wins}</Card.Text>
-                                        <Card.Text>Bônus: {player.bonus}</Card.Text>
-                                        <Card.Text>Penalidades: {player.penalties}</Card.Text>
+                                        <Card.Text><span className="text-bold">Coletas:</span> {player.collections}</Card.Text>
+                                        <Card.Text><span className="text-bold">War / Part:</span> {player.wars_participated}</Card.Text>
+                                        <Card.Text><span className="text-bold">Guerra: </span>{player.wars_participated}/10 - {player.matches}</Card.Text>
+                                        <Card.Text><span className="text-bold">Penalidades: </span>{player.punishment}</Card.Text>
+                                        <Card.Text><span className="text-bold">Derrotas: </span>{player.defeats}</Card.Text>
+                                        <Card.Text><span className="text-bold">Vitórias: </span>{player.wins}</Card.Text>
+                                        <Card.Text><span className="text-bold">Bônus: </span>{player.bonus}</Card.Text>
+                                        <Card.Text><span className="text-bold">Penalidades: </span>{player.penalties}</Card.Text>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
